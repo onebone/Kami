@@ -1,0 +1,20 @@
+Beginner:
+  default: true
+  permissions:
+  - nukkit.command.help
+  - nukkit.command.list
+Member:
+  extends: [Beginner]
+  permissions:
+  - nukkit.command.me
+Admin:
+  extends: [Beginner, Member]
+  permissions:
+  - nukkit.command.gamemode
+  - nukkit.command.time
+  - nukkit.command.say
+  - nukkit.command.kick
+  - nukkit.command.ban
+Owner:
+  permissions:
+  - '*'

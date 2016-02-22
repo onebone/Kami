@@ -1,0 +1,52 @@
+name: Kami
+author: onebone
+main: me.onebone.kami.Kami
+version: "1.0.0-SNAPSHOT"
+api: [1.0.0]
+commands:
+  addgroup:
+    description: Adds group
+    usage: /addgroup [[-d]] <group>
+    permission: kami.command.addgroup
+  rmgroup:
+    description: Removes group
+    usage: /rmgroup <group>
+    permission: kami.command.rmgroup
+  usermod:
+    description: Modifies user data
+    usage: /usermod <[-g <group>][-a <permission>][-r <permission>]> <player>
+    permission: kami.command.usermod
+  groups:
+    description: Shows all existing groups
+    usage: /groups
+    permission: kami.command.groups
+  user:
+    description: Shows information of user
+    usage: /user <player>
+    permission: kami.command.user
+  group:
+    description: Manages group
+    usage: /group <[-d][-a <permission>][-r <permission>]> <group>
+    permission: kami.command.group
+  perms:
+    description: Displays permission of group or user
+    usage: /perms <[-u <user>][-g <group>][-p <page]>
+permissions:
+  kami:
+    description: Includes all permissions of Kami
+    children:
+      kami.command:
+        description: Includes all permission to use commands of Kami
+        children:
+          kami.command.addgroup:
+            description: Allows player to use /addgroup
+          kami.command.rmgroup:
+            description: Allows player to use /rmgroup
+          kami.command.usermod:
+            description: Allows player to use /usermod
+          kami.command.groups:
+            description: Allows player to use /groups
+          kami.command.user:
+            description: Allows player to use /user
+      kami.invalidmove:
+        description: Cancel invalid move detection
