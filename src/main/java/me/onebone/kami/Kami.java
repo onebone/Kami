@@ -407,6 +407,7 @@ public class Kami extends PluginBase implements Listener{
 				sender.sendMessage(TextFormat.GREEN + "User data for: " + player + "\n"
 									+ "Group: " + user.getOrDefault("group", Group.getDefaultGroup().getName()) + "\n");
 			}
+			return true;
 		}else if(command.getName().equals("perms")){
 			Map<String, String> argMap;
 			try{

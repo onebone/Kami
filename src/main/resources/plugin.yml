@@ -31,6 +31,7 @@ commands:
   perms:
     description: Displays permission of group or user
     usage: /perms <[-u <user>][-g <group>][-p <page]>
+    permission: kami.command.perms
 permissions:
   kami:
     description: Includes all permissions of Kami
@@ -48,5 +49,7 @@ permissions:
             description: Allows player to use /groups
           kami.command.user:
             description: Allows player to use /user
+          kami.command.perms:
+            description: Allows player to use /perms
       kami.invalidmove:
         description: Cancel invalid move detection
