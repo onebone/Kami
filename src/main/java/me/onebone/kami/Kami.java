@@ -88,11 +88,11 @@ public class Kami extends PluginBase implements Listener{
 				return;
 			}
 			
-			User user = new User(this, player, this.provider);
-			this.users.put(player.getName().toLowerCase(), user);
-			
 			this.provider.addPlayer(player.getName(), defaultGroup.getName());
 		}
+		
+		User user = new User(this, player, this.provider);
+		this.users.put(player.getName().toLowerCase(), user);
 	}
 	
 	@EventHandler

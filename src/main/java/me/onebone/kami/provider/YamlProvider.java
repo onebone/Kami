@@ -48,10 +48,10 @@ public class YamlProvider implements Provider{
 	
 	@SuppressWarnings("serial")
 	public void addPlayer(String player, final String group){
-		player = player.toLowerCase();
 		
-		new Config(new File(this.baseFolder, player + ".yml"), Config.YAML, new LinkedHashMap<String, Object>(){
+		new Config(new File(this.baseFolder, player.toLowerCase() + ".yml"), Config.YAML, new LinkedHashMap<String, Object>(){
 			{
+				put("name", player);
 				put("group", group);
 				put("permission", new ArrayList<String>());
 			}
@@ -112,6 +112,8 @@ public class YamlProvider implements Provider{
 	}
 
 	public void removePlayer(String player){
+		player = player.toLowerCase();
+		
 		File file = new File(this.baseFolder, player + ".yml");
 		if(file.exists()){
 			file.delete();
@@ -119,6 +121,8 @@ public class YamlProvider implements Provider{
 	}
 	
 	public List<String> getPermissions(String player){
+		player = player.toLowerCase();
+		
 		File file = new File(this.baseFolder, player + ".yml");
 		if(file.isFile()){
 			return new Config(file, Config.YAML).get("permissions", new ArrayList<String>());
@@ -128,6 +132,8 @@ public class YamlProvider implements Provider{
 
 	@Override
 	public String getGroup(String player){
+		player = player.toLowerCase();
+		
 		File file = new File(this.baseFolder, player + ".yml");
 		if(file.isFile()){
 			return new Config(file, Config.YAML).get("group", Group.getDefaultGroup().getName());
