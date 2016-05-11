@@ -114,13 +114,8 @@ public class Kami extends PluginBase implements Listener{
 	@SuppressWarnings("serial")
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
 		if(command.getName().equals("addgroup")){
-			Map<String, String> argMap;
-			try{
-				argMap = getArguments("d", args);
-			}catch(Exception e){
-				sender.sendMessage(TextFormat.RED + "Please provide valid parameters.");
-				return true;
-			}
+			Map<String, String> argMap = getArguments("d", args);
+			
 			if(argMap == null){
 				sender.sendMessage(TextFormat.RED + "Please provide valid parameters.");
 				return true;
@@ -154,13 +149,8 @@ public class Kami extends PluginBase implements Listener{
 			sender.sendMessage(TextFormat.GREEN + "Group " + group + " was added successfully.");
 			return true;
 		}else if(command.getName().equals("rmgroup")){
-			Map<String, String> argMap;
-			try{
-				argMap = getArguments("", args);
-			}catch(Exception e){
-				sender.sendMessage(TextFormat.RED + "Please provide valid parameters.");
-				return true;
-			}
+			Map<String, String> argMap = getArguments("", args);
+			
 			if(argMap == null){
 				sender.sendMessage(TextFormat.RED + "Please provide valid parameters.");
 				return true;
@@ -186,13 +176,7 @@ public class Kami extends PluginBase implements Listener{
 			sender.sendMessage(TextFormat.GREEN + "Removed group " + group.getName());
 			return true;
 		}else if(command.getName().equals("usermod")){
-			Map<String, String> argMap;
-			try{
-				argMap = getArguments("g:a:r:", args);
-			}catch(Exception e){
-				sender.sendMessage(TextFormat.RED + "Please provide valid parameters.");
-				return true;
-			}
+			Map<String, String> argMap = getArguments("g:a:r:", args);
 			
 			if(argMap == null){
 				sender.sendMessage(TextFormat.RED + "Please provide valid parameters.");
@@ -308,13 +292,7 @@ public class Kami extends PluginBase implements Listener{
 			sender.sendMessage(builder.substring(0, builder.length() - 2));
 			return true;
 		}else if(command.getName().equals("group")){
-			Map<String, String> argMap;
-			try{
-				argMap = getArguments("da:r:", args);
-			}catch(Exception e){
-				sender.sendMessage(TextFormat.RED + "Please provide valid parameters.");
-				return true;
-			}
+			Map<String, String> argMap = getArguments("da:r:", args);
 			
 			if(argMap == null){
 				sender.sendMessage(TextFormat.RED + "Please provide valid parameters.");
@@ -377,13 +355,7 @@ public class Kami extends PluginBase implements Listener{
 			}
 			return true;
 		}else if(command.getName().equals("user")){
-			Map<String, String> argMap;
-			try{
-				argMap = getArguments("", args);
-			}catch(Exception e){
-				sender.sendMessage(TextFormat.RED + "Please provide valid parameters.");
-				return true;
-			}
+			Map<String, String>	argMap = getArguments("", args);
 			
 			if(argMap == null){
 				sender.sendMessage(TextFormat.RED + "Please provide valid parameters.");
@@ -409,13 +381,7 @@ public class Kami extends PluginBase implements Listener{
 			}
 			return true;
 		}else if(command.getName().equals("perms")){
-			Map<String, String> argMap;
-			try{
-				argMap = getArguments("u:g:p:", args);
-			}catch(Exception e){
-				sender.sendMessage(TextFormat.RED + "Please provide valid parameters.");
-				return true;
-			}
+			Map<String, String> argMap = getArguments("u:g:p:", args);
 			
 			if(argMap == null){
 				sender.sendMessage(TextFormat.RED + "Please provide valid parameters.");
