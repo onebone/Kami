@@ -65,8 +65,6 @@ public class User{
 		permissions.putAll(group.getPermissions());
 		permissions.putAll(this.getPermissions());
 		
-		this.permissions.forEach(System.out::println);
-		
 		attachment.setPermissions(permissions);
 	}
 	
