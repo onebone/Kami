@@ -112,6 +112,7 @@ public class User{
 	public boolean addPermission(String permission){
 		if(!this.permissions.contains(permission)){
 			this.permissions.add(permission);
+			this.provider.addPermission(this.player.getName(), permission);
 			
 			this.apply();
 			
@@ -123,6 +124,7 @@ public class User{
 	
 	public boolean removePermission(String permission){
 		if(this.permissions.remove(permission)){
+			this.provider.removePermission(this.player.getName(), permission);
 			this.apply();
 			
 			this.plugin.getServer().getPluginManager().callEvent(new UserPermissionChangedEvent(this, permission, UserPermissionChangedEvent.TYPE_REMOVE));

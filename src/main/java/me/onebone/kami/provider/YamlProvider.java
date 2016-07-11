@@ -20,11 +20,11 @@ package me.onebone.kami.provider;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import cn.nukkit.utils.Config;
+import cn.nukkit.utils.ConfigSection;
 import me.onebone.kami.Group;
 import me.onebone.kami.Kami;
 
@@ -48,14 +48,15 @@ public class YamlProvider implements Provider{
 	
 	@SuppressWarnings("serial")
 	public void addPlayer(String player, final String group){
-		
-		new Config(new File(this.baseFolder, player.toLowerCase() + ".yml"), Config.YAML, new LinkedHashMap<String, Object>(){
+		Config config = new Config(new File(this.baseFolder, player.toLowerCase() + ".yml"), Config.YAML);
+		config.setAll(new ConfigSection(){
 			{
-				put("name", player);
-				put("group", group);
-				put("permission", new ArrayList<String>());
+				set("name", player);
+				set("group", group);
+				set("permission", new ArrayList<String>());
 			}
 		});
+		config.save();
 	}
 
 	public Map<String, Object> getPlayer(String player){
