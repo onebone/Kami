@@ -155,6 +155,6 @@ public class User{
 			}
 		}
 		
-		return true;
+		return raws.length <= perms.length;
 	}
 }
