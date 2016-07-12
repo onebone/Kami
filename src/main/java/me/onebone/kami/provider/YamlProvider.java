@@ -48,15 +48,19 @@ public class YamlProvider implements Provider{
 	
 	@SuppressWarnings("serial")
 	public void addPlayer(String player, final String group){
-		Config config = new Config(new File(this.baseFolder, player.toLowerCase() + ".yml"), Config.YAML);
-		config.setAll(new ConfigSection(){
-			{
-				set("name", player);
-				set("group", group);
-				set("permission", new ArrayList<String>());
-			}
-		});
-		config.save();
+		File file = new File(this.baseFolder, player.toLowerCase() + ".yml");
+
+		if(!file.exists()){
+			Config config = new Config(new File(this.baseFolder, player.toLowerCase() + ".yml"), Config.YAML);
+			config.setAll(new ConfigSection(){
+				{
+					set("name", player);
+					set("group", group);
+					set("permission", new ArrayList<String>());
+				}
+			});
+			config.save();
+		}
 	}
 
 	public Map<String, Object> getPlayer(String player){

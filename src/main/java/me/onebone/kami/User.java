@@ -19,8 +19,10 @@ package me.onebone.kami;
  */
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -72,23 +74,13 @@ public class User{
 		Map<String, Boolean> permissions = new HashMap<String, Boolean>();
 		
 		this.permissions.forEach((v) -> {
-			if(v.equals("*")){
-				plugin.getServer().getPluginManager().getPermissions().forEach((perm, val) -> {
-					if(!permissions.containsKey(perm)){
-						permissions.put(perm, true);
-					}
-				});
-			}else if(v.equals("-*")){
-				plugin.getServer().getPluginManager().getPermissions().forEach((perm, val) -> {
-					if(!permissions.containsKey(perm)){
-						permissions.put(perm, false);
-					}
-				});
+			if(v.startsWith("-")){
+				for(String node : parseWildcard(v.substring(1), plugin.getServer().getPluginManager().getPermissions().keySet())){
+					permissions.put(node, false);
+				}
 			}else{
-				if(v.startsWith("-")){
-					permissions.put(v.substring(1), false);
-				}else{
-					permissions.put(v, true);
+				for(String node : parseWildcard(v, plugin.getServer().getPluginManager().getPermissions().keySet())){
+					permissions.put(node, true);
 				}
 			}
 		});
@@ -131,5 +123,38 @@ public class User{
 			return true;
 		}
 		return false;
+	}
+
+	public static Set<String> parseWildcard(String permission, Set<String> permissions){
+		Set<String> ret = new HashSet<String>();
+		
+		if(permission.contains("*")){
+			for(String origin : permissions){
+				if(matches(permission, origin)){
+					ret.add(origin);
+				}
+			}
+		}else{
+			ret.add(permission);
+		}
+		
+		return ret;
+	}
+	
+	public static boolean matches(String perm, String raw){
+		String[] perms = perm.split("\\.");
+		String[] raws = raw.split("\\.");
+
+		boolean wildcard = false;
+		for(int i = 0; i < perms.length; i++){
+			wildcard = perms[i].equals("*");
+			if(wildcard && i == perms.length - 1) return true;
+
+			if(raws.length <= i || (!wildcard && !perms[i].equals(raws[i]))){
+				return false;
+			}
+		}
+		
+		return true;
 	}
 }
