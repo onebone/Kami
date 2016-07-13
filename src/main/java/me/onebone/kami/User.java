@@ -125,7 +125,7 @@ public class User{
 		return false;
 	}
 
-	public static Set<String> parseWildcard(String permission, Set<String> permissions){
+	private static Set<String> parseWildcard(String permission, Set<String> permissions){
 		Set<String> ret = new HashSet<String>();
 		
 		if(permission.contains("*")){
@@ -141,20 +141,33 @@ public class User{
 		return ret;
 	}
 	
-	public static boolean matches(String perm, String raw){
+	private static boolean matches(String node, String perm){
+		String[] nodes = node.split("\\.");
 		String[] perms = perm.split("\\.");
-		String[] raws = raw.split("\\.");
-
-		boolean wildcard = false;
-		for(int i = 0; i < perms.length; i++){
-			wildcard = perms[i].equals("*");
-			if(wildcard && i == perms.length - 1) return true;
-
-			if(raws.length <= i || (!wildcard && !perms[i].equals(raws[i]))){
-				return false;
+		
+		int permIndex = 0;
+		for(int i = 0; i < nodes.length; i++){
+			boolean wildcard = nodes[i].equals("*");
+			if(wildcard){
+				if(i == nodes.length - 1) return true;
+				
+				int index = findIndex(perms, nodes[i + 1], permIndex);
+				if(index == -1) return false;
+				
+				permIndex = index;
+			}else{
+				if(!nodes[i].equals(perms[permIndex++])) return false;
+				if(i == nodes.length - 1) return true;
 			}
 		}
 		
-		return raws.length <= perms.length;
+		return true;
+	}
+	
+	private static int findIndex(String[] arr, String needle, int fromIndex){
+		for(; fromIndex < arr.length; fromIndex++){
+			if(needle.equals(arr[fromIndex])) return fromIndex;
+		}
+		return -1;
 	}
 }
