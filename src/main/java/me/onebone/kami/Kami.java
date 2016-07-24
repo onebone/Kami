@@ -201,7 +201,7 @@ public class Kami extends PluginBase implements Listener{
 					Group group = Group.getGroup(name);
 					if(group != null){
 						Player p;
-						if((p = this.getServer().getPlayer(player)) instanceof Player){
+						if((p = this.getServer().getPlayerExact(player)) instanceof Player){
 							player = p.getName();
 							
 							if(users.containsKey(player.toLowerCase())){
@@ -226,10 +226,6 @@ public class Kami extends PluginBase implements Listener{
 					
 					String append = argMap.get("a");
 					
-					Player p;
-					if((p = this.getServer().getPlayer(player)) instanceof Player){
-						player = p.getName();
-					}
 					if(this.users.containsKey(player.toLowerCase())){
 						if(this.users.get(player.toLowerCase()).addPermission(append)){
 							sender.sendMessage(TextFormat.GREEN + "Added " + append + " to " + player);
@@ -250,10 +246,7 @@ public class Kami extends PluginBase implements Listener{
 					action++;
 					
 					String remove = argMap.get("r");
-					Player p1;
-					if((p1 = this.getServer().getPlayer(player)) instanceof Player){
-						player = p1.getName();
-					}
+					
 					if(this.users.containsKey(player.toLowerCase())){
 						if(this.users.get(player.toLowerCase()).removePermission(remove)){
 							sender.sendMessage(TextFormat.GREEN + "Removed " + remove + " from " + player);
