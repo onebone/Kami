@@ -18,6 +18,7 @@ package me.onebone.kami;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -143,7 +144,7 @@ public class User{
 		
 		return ret;
 	}
-	
+
 	private static boolean matches(String node, String perm){
 		String[] nodes = node.split("\\.");
 		String[] perms = perm.split("\\.");
@@ -154,23 +155,37 @@ public class User{
 			if(wildcard){
 				if(i == nodes.length - 1) return true;
 				
-				int index = findIndex(perms, nodes[i + 1], permIndex);
-				if(index == -1) return false;
+				int dest = findIndex(nodes, "*", i + 1);
+				if(dest == -1) dest = nodes.length;
+
+				permIndex = findIndex(perms, 
+						Arrays.copyOfRange(nodes, i + 1, dest),
+						permIndex);
+				if(permIndex == -1) return false;
 				
-				permIndex = index;
+				i += (dest - i - 1);
 			}else{
-				if(!nodes[i].equals(perms[permIndex++])) return false;
+				if(permIndex >= perms.length || !nodes[i].equals(perms[permIndex++])) return false;
 				if(i == nodes.length - 1) return true;
 			}
 		}
 		
-		return true;
+		return permIndex == perms.length;
+	}
+
+	private static int findIndex(String[] arr, String[] needle, int fromIndex){
+		for(; fromIndex < arr.length; fromIndex++){
+			if(Arrays.equals(needle, Arrays.copyOfRange(arr, fromIndex, fromIndex + needle.length))) return fromIndex + needle.length;
+		}
+
+		return -1;
 	}
 	
 	private static int findIndex(String[] arr, String needle, int fromIndex){
 		for(; fromIndex < arr.length; fromIndex++){
 			if(needle.equals(arr[fromIndex])) return fromIndex;
 		}
+
 		return -1;
 	}
 }
