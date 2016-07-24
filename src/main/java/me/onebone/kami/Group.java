@@ -23,8 +23,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import me.onebone.kami.event.group.GroupPermissionChangedEvent;
 
@@ -89,7 +87,7 @@ public class Group{
 	}
 	
 	public Map<String, Boolean> getPermissions(){
-		SortedMap<String, Boolean> permissions = new TreeMap<String, Boolean>(new PermissionComparator());
+		Map<String, Boolean> permissions = new HashMap<String, Boolean>();
 		this.applyParents(permissions);
 		
 		this.permissions.forEach((v) -> {

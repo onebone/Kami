@@ -57,6 +57,7 @@ public class User{
 		return this.player;
 	}
 	
+	@SuppressWarnings("serial")
 	public void apply(){
 		if(attachment == null){
 			attachment = player.addAttachment(plugin);
@@ -64,14 +65,24 @@ public class User{
 		
 		attachment.clearPermissions();
 		
-		final SortedMap<String, Boolean> permissions = new TreeMap<String, Boolean>(new PermissionComparator());
+		Map<String, Boolean> permissions = new HashMap<String, Boolean>();
 		
 		group.getPermissions().forEach((k, v) -> permissions.put(k, v));
 		//permissions.putAll(group.getPermissions());
-		this.getPermissions().forEach((k, v) -> permissions.put(k, v));
+		this.getPermissions().forEach((k, v) -> {
+			if(permissions.containsKey(k)){
+				permissions.replace(k, v);
+			}else{
+				permissions.put(k, v);
+			}
+		});
 		//permissions.putAll(this.getPermissions());
 		
-		attachment.setPermissions(permissions);
+		attachment.setPermissions(new TreeMap<String, Boolean>(new PermissionComparator()){
+			{
+				this.putAll(permissions);
+			}
+		});
 	}
 	
 	public Map<String, Boolean> getPermissions(){
