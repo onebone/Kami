@@ -63,9 +63,12 @@ public class User{
 		
 		attachment.clearPermissions();
 		
-		SortedMap<String, Boolean> permissions = new TreeMap<String, Boolean>(new PermissionComparator());
-		permissions.putAll(group.getPermissions());
-		permissions.putAll(this.getPermissions());
+		final SortedMap<String, Boolean> permissions = new TreeMap<String, Boolean>(new PermissionComparator());
+		
+		group.getPermissions().forEach((k, v) -> permissions.put(k, v));
+		//permissions.putAll(group.getPermissions());
+		this.getPermissions().forEach((k, v) -> permissions.put(k, v));
+		//permissions.putAll(this.getPermissions());
 		
 		attachment.setPermissions(permissions);
 	}
@@ -125,7 +128,7 @@ public class User{
 		return false;
 	}
 
-	private static Set<String> parseWildcard(String permission, Set<String> permissions){
+	public static Set<String> parseWildcard(String permission, Set<String> permissions){
 		Set<String> ret = new HashSet<String>();
 		
 		if(permission.contains("*")){

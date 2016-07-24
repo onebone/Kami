@@ -93,23 +93,13 @@ public class Group{
 		this.applyParents(permissions);
 		
 		this.permissions.forEach((v) -> {
-			if(v.equals("*")){
-				plugin.getServer().getPluginManager().getPermissions().forEach((perm, val) -> {
-					if(!permissions.containsKey(perm)){
-						permissions.put(perm, true);
-					}
-				});
-			}else if(v.equals("-*")){
-				plugin.getServer().getPluginManager().getPermissions().forEach((perm, val) -> {
-					if(!permissions.containsKey(perm)){
-						permissions.put(perm, false);
-					}
-				});
+			if(v.startsWith("-")){
+				for(String node : User.parseWildcard(v.substring(1), plugin.getServer().getPluginManager().getPermissions().keySet())){
+					permissions.put(node, false);
+				}
 			}else{
-				if(v.startsWith("-")){
-					permissions.put(v.substring(1), false);
-				}else{
-					permissions.put(v, true);
+				for(String node : User.parseWildcard(v, plugin.getServer().getPluginManager().getPermissions().keySet())){
+					permissions.put(node, true);
 				}
 			}
 		});
